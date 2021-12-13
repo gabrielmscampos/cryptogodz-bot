@@ -205,11 +205,20 @@ while STOP_EVT_LOOP is False:
             driver.find_element_by_xpath(
                 '/html/body/div/div[1]/div[2]/div/div[2]/div/div[3]/div/button'
             ).click() # Click Umbra level
+
+            time.sleep(4)
+            try:
+                driver.find_element_by_xpath(
+                    f'/html/body/div/div[1]/div[2]/div/div[2]/div/div[3]/div/ul/li[{UMBRA_LEVEL}]'
+                ).click() # Select umbra level
+            except:
+                driver.find_element_by_xpath(
+                    f'/html/body/div/div[1]/div[2]/div/div[2]/div/div[3]/div/ul/li[{UMBRA_LEVEL}]'
+                ).click() # Select umbra level
+
+            time.sleep(4)
             driver.find_element_by_xpath(
-                '/html/body/div/div[1]/div[2]/div/div[2]/div/div[3]/div/ul/li[17]'
-            ).click() # Select umbra level
-            driver.find_element_by_xpath(
-                '/html/body/div/div[1]/div[2]/div/div[3]/div[1]/div/div[17]/div/div/div[3]/button'
+                '/html/body/div/div[1]/div[2]/div/div[3]/div[1]/div/div[{UMBRA_LEVEL}]/div/div/div[3]/button'
             ).click() # Engage combat
             time.sleep(10)
 
@@ -267,6 +276,7 @@ while STOP_EVT_LOOP is False:
 
                 # Refresh to get current pending godz
                 driver.refresh()
+                time.sleep(20)
                 new_pending = driver.find_element_by_xpath(
                     '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
                 ).text
@@ -284,11 +294,11 @@ while STOP_EVT_LOOP is False:
                 msg += f'Status: {status_combat}\n'
                 msg += f'Damage dealt: {dmg_dealt}\n'
                 msg += f'Reward: {gain_reward} $GODZ\n'
-                msg += f'Current peding GODZ: {new_pending} $GODZ'
+                msg += f'Current peding GODZ: {new_pending} $GODZ\n'
                 msg += f'Next combat: {next_combat} UTC'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
         else:
-            print('Not ready to play again.', flush=True)
+            pass
     except Exception as ex:
         msg = f'Bot stopped due to: {str(ex)}\n'
         msg += f'Solve and restart bot.'
