@@ -76,7 +76,7 @@ time.sleep(3)
 driver.find_element_by_xpath(
     '/html/body/div[1]/div[1]/div[2]/div[2]/div[1]/div/div[1]/button'
 ).click()
-time.sleep(3)
+time.sleep(15)
 driver.switch_to.window(driver.window_handles[1])
 driver.find_element_by_xpath('//button[text()="Next"]').click()
 driver.find_element_by_xpath('//button[text()="Connect"]').click()
@@ -90,7 +90,7 @@ time.sleep(15)
 driver.find_element_by_xpath(
     '/html/body/div/div[1]/div[1]/nav/div/div/div[2]/ul/li[3]/a'
 ).click()
-time.sleep(3)
+time.sleep(15)
 driver.switch_to.window(driver.window_handles[1])
 driver.find_element_by_xpath('//button[text()="Next"]').click()
 driver.find_element_by_xpath('//button[text()="Connect"]').click()
@@ -166,7 +166,7 @@ while STOP_EVT_LOOP is False:
             driver.find_element_by_xpath(
                 '/html/body/div[1]/div[1]/div[2]/div[2]/div[1]/div/div[1]/button'
             ).click()
-            time.sleep(3)
+            time.sleep(15)
 
             # Switch to metamask window
             driver.switch_to.window(driver.window_handles[1])
@@ -186,7 +186,7 @@ while STOP_EVT_LOOP is False:
             driver.find_element_by_xpath(
                 '/html/body/div/div[1]/div[1]/nav/div/div/div[2]/ul/li[3]/a'
             ).click()
-            time.sleep(3)
+            time.sleep(15)
 
             # Accept connection with metamask
             driver.switch_to.window(driver.window_handles[1])
@@ -223,7 +223,7 @@ while STOP_EVT_LOOP is False:
             driver.find_element_by_xpath(
                 '/html/body/div/div[3]/div/div[2]/div[2]/button[2]'
             ).click() # OK Engage combat
-            time.sleep(3)
+            time.sleep(15)
 
             # Switch to accept metamask tx
             driver.switch_to.window(driver.window_handles[1])
