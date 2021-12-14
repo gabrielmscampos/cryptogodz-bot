@@ -98,6 +98,7 @@ time.sleep(120) # Naive waiter for GODZ to load your sentz
 old_pending = driver.find_element_by_xpath(
     '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
 ).text
+driver.close()
 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot... Current pending GODZ: {old_pending}')
 
 while STOP_EVT_LOOP is False:
