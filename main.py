@@ -242,19 +242,18 @@ while STOP_EVT_LOOP is False:
 
             if total_fee_bnb > MAX_FEE_BNB:
                 driver.close()
-                msg = f'Bot stopped because fee is too high: {total_fee_bnb} BNB\n'
-                msg += f'Solve and restart bot.'
+                msg = f'Bot stopped because fee is too high: {total_fee_bnb} $BNB'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
                 STOP_EVT_LOOP = True
             else:
                 driver.find_element_by_xpath('//button[text()="Confirm"]').click()
 
-                msg = 'Engaging combat...\n'
-                msg += f'Current pending GODZ: {old_pending} $GODZ\n'
-                msg += f'Umbra leevel: {UMBRA_LEVEL}\n'
-                msg += f'Damage required to WIN: {dmg_req}\n'
-                msg += f'Reward if WIN: {prev_reward} $GODZ\n'
-                msg += f'BSC Fee paid: {total_fee_bnb} $BNB'
+                msg = 'Engaging combat...\n\n'
+                msg += f'{old_pending}\n'
+                msg += f'Umbra level: {UMBRA_LEVEL}\n'
+                msg += f'{dmg_req}\n'
+                msg += f'{prev_reward}\n'
+                msg += f'BSC fee: {total_fee_bnb} $BNB'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
 
                 # Go back to GODZ to check WIN/LOSE
@@ -289,18 +288,19 @@ while STOP_EVT_LOOP is False:
                 ).strftime('%Y-%m-%d %H:%M:%S')
 
                 # Variables to send to telegram
-                msg = 'Combat results...\n'
-                msg += f'Status: {status_combat}\n'
-                msg += f'Damage dealt: {dmg_dealt}\n'
-                msg += f'Reward: {gain_reward} $GODZ\n'
-                msg += f'Current peding GODZ: {new_pending} $GODZ\n'
+                msg = 'Combat results...\n\n'
+                msg += f'{status_combat}\n'
+                msg += f'{dmg_req}\n'
+                msg += f'{dmg_dealt}\n'
+                msg += f'Reward: {gain_reward.replace("\n", " ")}\n'
+                msg += f'{new_pending}\n\n'
                 msg += f'Next combat: {next_combat} UTC'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
         else:
             pass
     except Exception as ex:
-        msg = f'Bot stopped due to: {str(ex)}\n'
-        msg += f'Solve and restart bot.'
+        msg = f'Bot stopped due to:\n\n'
+        msg += str(ex)
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
         STOP_EVT_LOOP = True
         print(str(ex), flush=True)
