@@ -217,7 +217,7 @@ while STOP_EVT_LOOP is False:
 
             time.sleep(4)
             driver.find_element_by_xpath(
-                '/html/body/div/div[1]/div[2]/div/div[3]/div[1]/div/div[{UMBRA_LEVEL}]/div/div/div[3]/button'
+                f'/html/body/div/div[1]/div[2]/div/div[3]/div[1]/div/div[{UMBRA_LEVEL}]/div/div/div[3]/button'
             ).click() # Engage combat
             time.sleep(10)
 
