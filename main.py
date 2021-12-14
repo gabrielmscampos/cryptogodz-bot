@@ -39,17 +39,16 @@ bot = telegram.Bot(TELEGRAM_TOKEN)
 
 ## Testing getting PENDING Rewards
 opt = webdriver.ChromeOptions()
+opt.add_extension(EXTENSION_PATH)
 opt.add_argument('--disable-dev-shm-usage')
 opt.add_argument('--no-sandbox')
 opt.add_argument('--window-size=1420,1080')
 opt.add_argument('--disable-gpu')
-opt.add_extension(EXTENSION_PATH)
 driver = webdriver.Chrome(
     executable_path=WEBDRIVER_PATH,
     chrome_options=opt
 )
 driver.get(EXTENSION_PAGE)
-driver.maximize_window()
 time.sleep(15)
 driver.switch_to.window(driver.window_handles[1])
 driver.close()
@@ -64,7 +63,7 @@ inputs[1].send_keys(NEW_PASSWORD)
 inputs[2].send_keys(NEW_PASSWORD)
 driver.find_element_by_css_selector('.first-time-flow__terms').click()
 driver.find_element_by_xpath('//button[text()="Import"]').click()
-time.sleep(10)
+time.sleep(5)
 driver.find_element_by_xpath('//button[text()="All Done"]').click()
 time.sleep(3)
 driver.get(PANCAKE_SWAP_URL)
@@ -86,7 +85,7 @@ time.sleep(3)
 driver.find_element_by_xpath('//button[text()="Switch network"]').click()
 driver.switch_to.window(driver.window_handles[0])
 driver.get(CRYPTOGODZ_URL)
-time.sleep(15)
+time.sleep(10)
 driver.find_element_by_xpath(
     '/html/body/div/div[1]/div[1]/nav/div/div/div[2]/ul/li[3]/a'
 ).click()
@@ -99,7 +98,6 @@ time.sleep(120) # Naive waiter for GODZ to load your sentz
 old_pending = driver.find_element_by_xpath(
     '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
 ).text
-driver.close()
 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot... Current pending GODZ: {old_pending}')
 
 while STOP_EVT_LOOP is False:
