@@ -99,7 +99,7 @@ old_pending = driver.find_element_by_xpath(
     '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
 ).text
 driver.close()
-bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot... Current pending GODZ: {old_pending}')
+bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot...\n{old_pending}')
 
 while STOP_EVT_LOOP is False:
 
@@ -292,8 +292,8 @@ while STOP_EVT_LOOP is False:
                 msg += f'{status_combat}\n'
                 msg += f'{dmg_req}\n'
                 msg += f'{dmg_dealt}\n'
-                msg += f'Reward: {gain_reward.replace("\n", " ")}\n'
-                msg += f'{new_pending}\n\n'
+                msg += f'Reward: {gain_reward.replace("\n", " ")}\n\n'
+                msg += f'{new_pending}\n'
                 msg += f'Next combat: {next_combat} UTC'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
         else:
