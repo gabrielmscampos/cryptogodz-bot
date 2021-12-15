@@ -94,12 +94,8 @@ driver.switch_to.window(driver.window_handles[1])
 driver.find_element_by_xpath('//button[text()="Next"]').click()
 driver.find_element_by_xpath('//button[text()="Connect"]').click()
 driver.switch_to.window(driver.window_handles[0])
-time.sleep(120) # Naive waiter for GODZ to load your sentz
-old_pending = driver.find_element_by_xpath(
-    '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
-).text
 driver.close()
-bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot...\n{old_pending}')
+bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot...')
 
 while STOP_EVT_LOOP is False:
 
@@ -195,9 +191,6 @@ while STOP_EVT_LOOP is False:
             # Go back to Godz
             driver.switch_to.window(driver.window_handles[0])
             time.sleep(120) # Naive waiter for GODZ to load your sentz
-            old_pending = driver.find_element_by_xpath(
-                '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
-            ).text
             driver.find_element_by_xpath(
                 '/html/body/div/div[1]/div[2]/div/div[1]/div/div/div/a[3]'
             ).click() # Click in P2E
@@ -249,7 +242,6 @@ while STOP_EVT_LOOP is False:
                 driver.find_element_by_xpath('//button[text()="Confirm"]').click()
 
                 msg = 'Engaging combat...\n\n'
-                msg += f'{old_pending}\n'
                 msg += f'Umbra level: {UMBRA_LEVEL}\n'
                 msg += f'{dmg_req}\n'
                 msg += f'{prev_reward}\n'
@@ -271,13 +263,6 @@ while STOP_EVT_LOOP is False:
                 driver.find_element_by_xpath(
                     '/html/body/div/div[3]/div/div[2]/div[2]/button'
                 ).click() # OK button
-
-                # Refresh to get current pending godz
-                driver.refresh()
-                time.sleep(20)
-                new_pending = driver.find_element_by_xpath(
-                    '/html/body/div/div[1]/div[1]/nav/div/div/div[4]/a/div[2]'
-                ).text
                 driver.close()
 
                 # Get engage timestamp to next combat
@@ -287,13 +272,14 @@ while STOP_EVT_LOOP is False:
                     engage_timestamp + 86400
                 ).strftime('%Y-%m-%d %H:%M:%S')
 
+                str_rw = gain_reward.replace("\n", " ")
+
                 # Variables to send to telegram
                 msg = 'Combat results...\n\n'
                 msg += f'{status_combat}\n'
                 msg += f'{dmg_req}\n'
                 msg += f'{dmg_dealt}\n'
-                msg += f'Reward: {gain_reward.replace("\n", " ")}\n\n'
-                msg += f'{new_pending}\n'
+                msg += f'Reward: {str_rw}\n\n'
                 msg += f'Next combat: {next_combat} UTC'
                 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
         else:
