@@ -36,65 +36,6 @@ def request_engaged_ts(wallet_address):
     return data.get('cooldown')
 
 bot = telegram.Bot(TELEGRAM_TOKEN)
-
-## Testing getting PENDING Rewards
-opt = webdriver.ChromeOptions()
-opt.add_extension(EXTENSION_PATH)
-opt.add_argument('--disable-dev-shm-usage')
-opt.add_argument('--no-sandbox')
-opt.add_argument('--window-size=1420,1080')
-opt.add_argument('--disable-gpu')
-driver = webdriver.Chrome(
-    executable_path=WEBDRIVER_PATH,
-    chrome_options=opt
-)
-driver.get(EXTENSION_PAGE)
-time.sleep(15)
-driver.switch_to.window(driver.window_handles[1])
-driver.close()
-driver.switch_to.window(driver.window_handles[0])
-driver.find_element_by_xpath('//button[text()="Get Started"]').click()
-driver.find_element_by_xpath('//button[text()="Import wallet"]').click()
-driver.find_element_by_xpath('//button[text()="No Thanks"]').click()
-time.sleep(10)
-inputs = driver.find_elements_by_xpath('//input')
-inputs[0].send_keys(SECRET_RECOVERY_PHRASE)
-inputs[1].send_keys(NEW_PASSWORD)
-inputs[2].send_keys(NEW_PASSWORD)
-driver.find_element_by_css_selector('.first-time-flow__terms').click()
-driver.find_element_by_xpath('//button[text()="Import"]').click()
-time.sleep(5)
-driver.find_element_by_xpath('//button[text()="All Done"]').click()
-time.sleep(3)
-driver.get(PANCAKE_SWAP_URL)
-time.sleep(10)
-driver.find_element_by_xpath(
-    '//button[text()="Connect Wallet"]'
-).click()
-time.sleep(3)
-driver.find_element_by_xpath(
-    '/html/body/div[1]/div[1]/div[2]/div[2]/div[1]/div/div[1]/button'
-).click()
-time.sleep(15)
-driver.switch_to.window(driver.window_handles[1])
-driver.find_element_by_xpath('//button[text()="Next"]').click()
-driver.find_element_by_xpath('//button[text()="Connect"]').click()
-time.sleep(3)
-driver.find_element_by_xpath('//button[text()="Approve"]').click()
-time.sleep(3)
-driver.find_element_by_xpath('//button[text()="Switch network"]').click()
-driver.switch_to.window(driver.window_handles[0])
-driver.get(CRYPTOGODZ_URL)
-time.sleep(10)
-driver.find_element_by_xpath(
-    '/html/body/div/div[1]/div[1]/nav/div/div/div[2]/ul/li[3]/a'
-).click()
-time.sleep(15)
-driver.switch_to.window(driver.window_handles[1])
-driver.find_element_by_xpath('//button[text()="Next"]').click()
-driver.find_element_by_xpath('//button[text()="Connect"]').click()
-driver.switch_to.window(driver.window_handles[0])
-driver.close()
 bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=f'Starting bot...')
 
 while STOP_EVT_LOOP is False:
