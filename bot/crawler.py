@@ -128,8 +128,7 @@ class SeleniumBot:
         # Stop selenium if bnb fee is too high
         if total_fee_bnb > max_bnb_fee:
             self.driver.close()
-            telegram.notify_max_fee(total_fee_bnb)
-            raise MaxFeeException
+            raise MaxFeeException(total_fee_bnb)
 
         # Confirm transaction accepting gas fee
         self.driver.find_element_by_xpath('//button[text()="Confirm"]').click()

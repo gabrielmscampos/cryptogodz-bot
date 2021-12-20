@@ -47,8 +47,9 @@ def main():
             sel.play_cryptogodz(
                 tel, cbm, WALLET, MAX_BNB_FEE, UMBRA_LEVEL
             )
-        except MaxFeeException:
+        except MaxFeeException as total_fee_bnb:
             STOP_EVT_LOOP = True
+            tel.notify_max_fee(total_fee_bnb)
         except Exception as ex:
             STOP_EVT_LOOP = True
             tel.notify_crash(str(ex))
