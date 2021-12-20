@@ -32,7 +32,7 @@ RUN apt-get update \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb
 
-ADD ./cryptogodz_bot /app
+ADD ./cryptogodz_bot /app/cryptogodz_bot
 ADD ./requirements.txt /app
 ADD ./run.py /app
 ADD ./docker-entrypoint.sh /app
