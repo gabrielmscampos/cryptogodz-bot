@@ -35,7 +35,7 @@ RUN apt-get update \
 ADD ./cryptogodz_bot /app
 ADD ./requirements.txt /app
 ADD ./run.py /app
-ADD ./docker-entrypoint.py /app
+ADD ./docker-entrypoint.sh /app
 
 WORKDIR /app
 
