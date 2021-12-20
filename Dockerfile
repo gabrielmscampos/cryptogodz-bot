@@ -32,8 +32,13 @@ RUN apt-get update \
     && wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb
 
-ADD ./ /app
+ADD ./cryptogodz_bot /app
+ADD ./requirements.txt /app
+ADD ./run.py /app
+ADD ./docker-entrypoint.py /app
+
 WORKDIR /app
+
 ENV DISPLAY=:1
 RUN pip install -r requirements.txt \
     && chmod +x docker-entrypoint.sh
