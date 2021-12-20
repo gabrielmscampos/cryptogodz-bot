@@ -125,40 +125,43 @@ class SeleniumBot:
         total_fee_bnb = self.driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/div/div[4]/div[2]/div/div/div/div[2]/div[2]/div[1]/h6[2]/div/span[1]').text
         total_fee_bnb = float(total_fee_bnb)
 
+        # Stop selenium if bnb fee is too high
         if total_fee_bnb > max_bnb_fee:
-            # Stop selenium if bnb fee is too high
             self.driver.close()
             telegram.notify_max_fee(total_fee_bnb)
             raise MaxFeeException
-        else:
 
-            # Confirm transaction accepting gas fee
-            self.driver.find_element_by_xpath('//button[text()="Confirm"]').click()
+        # Confirm transaction accepting gas fee
+        self.driver.find_element_by_xpath('//button[text()="Confirm"]').click()
 
-            # Notify combat started
-            telegram.notify_engage_combat(umbra_level, dmg_required, pred_reward, total_fee_bnb)
+        # Notify combat started
+        telegram.notify_engage_combat(
+            umbra_level,
+            dmg_required,
+            pred_reward,
+            total_fee_bnb
+        )
 
-            # Go back to GODZ to check WIN/LOSE
-            self.driver.switch_to.window(self.driver.window_handles[0])
+        # Go back to GODZ to check combat results
+        self.driver.switch_to.window(self.driver.window_handles[0])
 
-            # Wait to confirm transaction
-            time.sleep(300)
+        # Wait to confirm transaction
+        time.sleep(300)
 
-            # Get combat results and close driver
-            status_combat = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/p/span').text
-            dmg_dealt = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/div[1]/p[2]').text
-            reward = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/div[1]/p[3]').text
-            self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/div[2]/button').click() # OK button
-            self.driver.close()
+        # Get combat results and close driver
+        status_combat = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/p/span').text
+        dmg_dealt = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/div[1]/p[2]').text
+        reward = self.driver.find_element_by_xpath('/html/body/div/div[3]/div/div[2]/div[1]/p[3]').text
+        self.driver.close()
 
-            # Get engage timestamp to next combat
-            combat_manager.get_last_fight(wallet)
+        # Get engage timestamp to next combat
+        combat_manager.get_last_fight(wallet)
 
-            # Notify with telegram bot
-            telegram.notify_combat_result(
-                status_combat,
-                dmg_required,
-                dmg_dealt,
-                reward.replace("\n", " "),
-                combat_manager.cooldown
-            )
+        # Notify with telegram bot
+        telegram.notify_combat_result(
+            status_combat,
+            dmg_required,
+            dmg_dealt,
+            reward.replace("\n", " "),
+            combat_manager.cooldown
+        )
