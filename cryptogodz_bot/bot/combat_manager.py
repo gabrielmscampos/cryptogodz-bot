@@ -1,19 +1,16 @@
 import json
-import os
 import time
 
 import requests
 
-NODE_API_URL = os.getenv('NODE_API_URL')
-
-
 class CombatManager:
 
-    def __init__(self):
+    def __init__(self, node_api_url):
         self.cooldown = 0
+        self.node_api_url = node_api_url
 
     def get_last_fight(self, wallet_address):
-        url = f'{NODE_API_URL}/engage-cd?address={wallet_address}'
+        url = f'{self.node_api_url}/engage-cd?address={wallet_address}'
         req = requests.get(url)
         data = json.loads(req.text)
         self.cooldown = float(data.get('cooldown'))

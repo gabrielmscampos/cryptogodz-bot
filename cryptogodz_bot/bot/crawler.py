@@ -1,21 +1,18 @@
 import time
-import os
 
 from selenium import webdriver
 
-SECRET_RECOVERY_PHRASE = os.getenv('SECRET_RECOVERY_PHRASE')
+from ..exceptions import MaxFeeException
 
-
-class MaxFeeException(Exception):
-    ...
 
 class SeleniumBot:
 
-    def __init__(self):
+    def __init__(self, seed_phrase):
         self.PANCAKE_SWAP_URL = 'https://pancakeswap.finance/'
         self.CRYPTOGODZ_URL = 'https://cryptogodz.io/'
         self.DUMMY_PASSWORD = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJzdWIiOiJiaXRjb2kiLCJuY'
         self.EXTENSION_PAGE = 'chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/home.html'
+        self.seed_phrase = seed_phrase
 
     def start_driver(self, extension_path, webdriver_path):
         opt = webdriver.ChromeOptions()
@@ -48,7 +45,7 @@ class SeleniumBot:
 
         # Enter wallet seed phrase and setup dummy password
         inputs = self.driver.find_elements_by_xpath('//input')
-        inputs[0].send_keys(SECRET_RECOVERY_PHRASE)
+        inputs[0].send_keys(self.seed_phrase)
         inputs[1].send_keys(self.DUMMY_PASSWORD)
         inputs[2].send_keys(self.DUMMY_PASSWORD)
         self.driver.find_element_by_css_selector('.first-time-flow__terms').click()
