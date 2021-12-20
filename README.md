@@ -4,7 +4,7 @@ Automated P2E in CryptoGodz using `cryptogodz-tools` node rest api for fetching 
 
 # Installation
 
-Using python virtual environemnt for development:
+Using python virtual enviroment for development:
 
 ```
 python -m venv python_modules
@@ -12,13 +12,7 @@ source python_modules/bin/activate
 pip install -r requirements.txt
 ```
 
-Under docker environment you just need run:
-
-```
-pip install -r requirements.txt
-```
-
-# Execution
+# How to use
 
 Simply enter you virtual environment (if needed):
 

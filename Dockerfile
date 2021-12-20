@@ -36,6 +36,6 @@ ADD ./ /app
 WORKDIR /app
 ENV DISPLAY=:1
 RUN pip install -r requirements.txt \
-    && chmod +x docker-start.sh
+    && chmod +x docker-entrypoint.sh
 
-CMD ./docker-start.sh
+CMD ./docker-entrypoint.sh
