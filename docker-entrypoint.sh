@@ -1,2 +1,2 @@
 Xvfb -ac :1 -screen 0 1920x1080x24+32 \
-    & python run.py
+    & python3 run.py
