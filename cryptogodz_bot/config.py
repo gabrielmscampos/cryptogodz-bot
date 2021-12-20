@@ -44,5 +44,5 @@ class Conf:
             raise ParameterNotFound("Parameter UMBRA_LEVEL not found.")
         elif self.UMBRA_LEVEL.isdigit() is False:
             raise InvalidParameter("Parameter UMBRA_LEVEL is not a valid integer.")
-        elif self.UMBRA_LEVEL < 1 or self.UMBRA_LEVEL > 30:
+        elif int(self.UMBRA_LEVEL) < 1 or int(self.UMBRA_LEVEL) > 30:
             raise InvalidParameter("Parameter UMBRA_LEVEL must be an integer between [1, 30].")
